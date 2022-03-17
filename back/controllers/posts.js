@@ -88,7 +88,7 @@ exports.getAllPosts = (req, res, next) => {
     );
   };
 
-  //Récupérer un post par ID//
+//Récupérer un post par ID//
 exports.getPostById = (req, res, next) => {
     db.query(`SELECT * FROM posts WHERE post_ID = ${req.params.id};`,
     (err, result) => {
