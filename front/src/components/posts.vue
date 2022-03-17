@@ -1,9 +1,15 @@
 <template>
     <div class="postContainer">
         <div class="message" v-for="item in list" v-bind:key="item.message">
-            <img class="avatar" v-bind:src="item.avatarURL">
-            <p><b><i>{{item.firstname}} {{item.lastname}}</i></b> a écrit :</p>
-            <p class="date">Le {{item.date_creation}}</p>
+            <div class="postInfos">
+              <div class="postAvatar">
+                <img class="avatar" v-bind:src="item.avatarURL">
+              </div>
+              <div class="">
+                <p><b><i>{{item.firstname}} {{item.lastname}}</i></b> a écrit :</p>
+                <p class="date">Le {{item.date_creation}}</p>
+              </div>
+            </div>
             <p>{{item.message}}</p>
             <img class="msg_img" v-bind:src="item.imageURL">
             <div v-if="admin > 0" class="admin"><button id="supp_btn" v-on:click="deleting(item.post_ID)" v-bind:value="item.post_ID">Supprimer</button><a>ID du post : <span>{{item.post_ID}}</span></a><a>/ID user : <span>{{item.user_ID}}</span></a></div>
@@ -15,9 +21,15 @@
                 <button class="validation" v-on:click="commentating(item.post_ID)">Envoyer<i class="fa-solid fa-angles-right"></i></button>
               </div>
               <div class="comm" v-for="element in item.comment" v-bind:key="element.commentaire_ID">
-                <img v-if="element.commentaire" class="comment_avatar" v-bind:src="element.avatarURL">
-                <p v-if="element.commentaire">Commentaire posté par <b><i>{{element.firstname}} {{element.lastname}}</i></b></p>
-                <p v-if="element.commentaire" class="date">Le {{element.date_commentaire}}</p>
+                <div class="commentInfos">
+                  <div class="commentAvatar">
+                    <img v-if="element.commentaire" class="comment_avatar" v-bind:src="element.avatarURL">
+                  </div>
+                  <div class="">
+                    <p v-if="element.commentaire"><b><i>{{element.firstname}} {{element.lastname}}</i></b> a commenté :</p>
+                    <p v-if="element.commentaire" class="date">Le {{element.date_commentaire}}</p>
+                  </div>
+                </div>
                 <p v-if="element.commentaire_ID != null">{{element.commentaire}}</p>
                 <div v-if="admin > 0 && element.commentaire"><button id="supp_btn" class="comment_btn_supp" v-on:click="comdeleting(element.commentaire_ID)" v-bind:value="element.commentaire_ID">Supprimer</button></div>
               </div>
@@ -26,6 +38,7 @@
     </div>
 </template>
 <script>
+
 export default {
     name: 'navbar',
     data() {
@@ -114,6 +127,24 @@ export default {
 @font-face {
   font-family: Montserrat;
   src: url(../assets/fonts/Montserrat-Regular.ttf) format("truetype");
+}
+.commentInfos {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+.commentAvatar {
+  margin: 0 10px;
+}
+.postInfos {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: row;
+  align-items: center;
+}
+.postAvatar {
+  margin: 0 10px;
 }
 .comment_avatar {
   width: 60px;

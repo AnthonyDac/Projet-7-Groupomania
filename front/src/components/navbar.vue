@@ -3,10 +3,10 @@
     <div class="navbarContent">
       <img class="top-logo" alt="Logo" src="../assets/img/icon-left-font-monochrome-white.png">
       <div class="boutons">
-        <a v-if="admin > 0" href=""><router-link to="/home"><i class="fa-solid fa-screwdriver-wrench"></i></router-link></a>
+        <a v-if="admin > 0"><router-link to="/admin"><i class="fa-solid fa-user-gear"></i></router-link></a>
         <a href=""><router-link to="/home"><i class="fa-solid fa-newspaper"></i></router-link></a>
         <a href=""><router-link to="/profil"><i class="fa-solid fa-user"></i></router-link></a>
-        <a href="" v-on:click="greet"><router-link to="/connexion"><i class="fa-solid fa-right-from-bracket"></i></router-link></a>
+        <a href=""><router-link to="/connexion"><i class="fa-solid fa-right-from-bracket"></i></router-link></a>
       </div>
     </div>
   </div>
@@ -19,7 +19,7 @@ export default {
         return {admin:undefined}
     },
   methods : {
-      admins : async function admins() {
+      admini : async function admini() {
         const requestOptions = {
           method: "GET",
           headers: { "Content-Type": "application/json" },
@@ -38,8 +38,8 @@ export default {
         localStorage.removeItem('token');
       }
   },
-  created: function(){
-      this.admins();
+  mounted: function(){
+      this.admini();
     }
 }
 </script>
@@ -71,7 +71,7 @@ export default {
   align-items: center;
 }
 .boutons {
-  width: 19%;
+  width: 25%;
   display: flex;
   justify-content: space-evenly;
 }

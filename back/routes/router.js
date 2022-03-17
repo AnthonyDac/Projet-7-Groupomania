@@ -113,6 +113,28 @@ router.post('/update_profil/:id', multer, async (req, res, next) => {
   );
   }
 });
+//Promouvoir en admin un utilisateur par ID//
+router.put('/userNowAdmin/:id', multer, async (req, res, next) => {
+  db.query(`UPDATE users SET isAdmin = 1 WHERE user_ID = ${req.params.id};`,
+  (err, result) => {
+      if(err) throw err;
+      if(!err) {
+        res.send({msg: 'Utilisateur désormais admin!'});
+      }
+    }
+  );
+});
+//Retirer les droits admin à un utilisateur par ID//
+router.put('/userNotAdmin/:id', multer, async (req, res, next) => {
+  db.query(`UPDATE users SET isAdmin = 0 WHERE user_ID = ${req.params.id};`,
+  (err, result) => {
+      if(err) throw err;
+      if(!err) {
+        res.send({msg: 'Utilisateur désormais un moldu!'});
+      }
+    }
+  );
+});
 //Supprimer un utilisateur par ID//
 router.put('/delete_user/:id', multer, async (req, res, next) => {
   db.query(`DELETE FROM users WHERE user_ID = ${req.params.id};`,
@@ -141,7 +163,14 @@ router.put('/delete_post/:id', multer, async (req, res, next) => {
   (err, result) => {
       if(err) throw err;
       if(!err) {
-        return res.status(409).send({msg: 'Post supprimé'});
+        db.query(`DELETE FROM comments WHERE post_ID = ${req.params.id};`,
+        (err, result) => {
+            if(err) throw err;
+            if(!err) {
+              return res.status(409).send({msg: 'Post supprimé'});
+            }
+          }
+        );
       }
     }
   );
@@ -280,5 +309,4 @@ router.get('/allPosts', async (req, res, next) => {
     }
   );
 });
-
 module.exports = router;
