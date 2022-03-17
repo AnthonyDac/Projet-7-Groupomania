@@ -22,5 +22,6 @@ body {
   margin: 0;
   overflow-x: hidden;
   color: white;
+  background-image: url('./assets/img/back2.jpg');
 }
 </style>
