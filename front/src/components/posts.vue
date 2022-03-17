@@ -290,4 +290,41 @@ export default {
   border-radius: 50%;
   object-fit: cover;
 }
+@media screen and (max-width : 767px) {
+.message {
+    background: #edede9;
+    width: 80%;
+    min-height: 100px;
+    margin: 15px 0;
+    border-radius: 15px;
+    padding: 10px;
+}
+}
+@media screen and (max-width : 445px) {
+.message {
+    background: #edede9;
+    width: 85%;
+    min-height: 100px;
+    margin: 15px 0;
+    border-radius: 15px;
+    padding: 10px;
+}
+.avatar {
+  width: 55px;
+  height: 55px;
+}
+.comment_avatar {
+  width: 55px;
+  height: 55px;
+}
+.validation {
+  background: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 35%;
+  margin: 10px 0;
+  font-size: 14px;
+}
+}
 </style>

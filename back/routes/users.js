@@ -17,6 +17,6 @@ router.get('/allProfils', userCtrl.getAllUsers);
 //Modifier l'avatar d'un utilisateur par ID//
 router.post('/update_profil/:id', multer, userCtrl.avatarModifier);
 //Supprimer un utilisateur par ID//
-router.put('/delete_user/:id', multer, userCtrl.deleteUser);
+router.delete('/delete_user/:id', multer, userCtrl.deleteUser);
 
 module.exports = router;

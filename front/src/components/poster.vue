@@ -142,4 +142,29 @@ export default {
 .validation i {
     margin-left: 5px;
 }
+@media screen and (max-width : 767px) {
+.poster {
+  width: 80%;
+}
+.posterContainer label {
+  font-size: 18px;
+}
+}
+@media screen and (max-width : 445px) {
+.poster {
+  width: 85%;
+}
+.posterContainer label {
+  font-size: 16px;
+}
+.validation {
+  background: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 10px;
+  width: 35%;
+  margin: 10px 0;
+  font-size: 14px;
+}
+}
 </style>

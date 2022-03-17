@@ -47,7 +47,7 @@ export default {
       deleteAccount : async function deleteUser() {
         console.log("Suppression d'utilisateur!");
         const requestOptions = {
-          method: "PUT",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
         };
         var id = localStorage.getItem('userId');
@@ -55,10 +55,10 @@ export default {
           if(data.error != null) {
             console.log(data.error);
           } else {
-            let url = location.href;
-            let newUrl = url.replace("profil", "connexion");
-            window.location.replace(newUrl);
-            localStorage.setItem('userId', null);
+            localStorage.removeItem('userId');
+            localStorage.removeItem('token');
+            location.assign('http://localhost:8080/#/connexion');
+            console.log(data)
           }
         })
       },

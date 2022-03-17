@@ -2,7 +2,7 @@
 <div>
     <navbar/>
     <div class="container">
-        <div class="">
+        <div class="tableContainer">
           <table class="GeneratedTable">
             <thead>
               <tr>
@@ -114,7 +114,7 @@ export default {
       deleteUser : async function deleteUser(value) {
         console.log(value)
         const requestOptions = {
-          method: "PUT",
+          method: "DELETE",
           headers: { "Content-Type": "application/json" },
         };
         var id = value;
@@ -196,12 +196,52 @@ table.GeneratedTable {
 table.GeneratedTable td, table.GeneratedTable th {
   border-width: 2px;
   border-color: #ffcc00;
-  border-style: solid;
   padding: 10px;
   text-align: center;
 }
 
 table.GeneratedTable thead {
   background-color: #ffcc00;
+}
+@media screen and (max-width : 1024px) {
+  table.GeneratedTable td, table.GeneratedTable th {
+ font-size: 13px;
+}
+  table.GeneratedTable {
+  width: 80%;
+}
+.tableContainer {
+  width: 45%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.avatar {
+  width: 50px;
+  height: 50px;
+  object-fit: cover;
+}
+}
+@media screen and (max-width : 767px) {
+  table.GeneratedTable td, table.GeneratedTable th {
+ font-size: 10px;
+}
+  table.GeneratedTable {
+  width: 20%;
+}
+.tableContainer {
+  width: 10%;
+}
+.avatar {
+  width: 25px;
+  height: 25px;
+}
+.btn {
+  border: none;
+  padding: 5px;
+  transition-duration: 0.3s;
+  border-radius: 10px;
+  font-size: 10px;
+}
 }
 </style>

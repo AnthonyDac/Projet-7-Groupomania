@@ -197,4 +197,14 @@ button:hover {
   cursor: pointer;
   transition-duration: 0.3s;
 }
+@media screen and (max-width : 1024px) {
+.login-box {
+  width: 40%;
+}
+}
+@media screen and (max-width : 768px) {
+.login-box {
+  width: 50%;
+}
+}
 </style>

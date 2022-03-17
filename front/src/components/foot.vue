@@ -40,4 +40,9 @@ export default {
     text-decoration: none;
     margin: 0 5px;
 }
+@media screen and (max-width : 445px) {
+.footer {
+  font-size: 12px
+}
+}
 </style>

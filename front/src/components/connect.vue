@@ -126,11 +126,20 @@ input {
     color: black;
     font-size: 18px;
     transition-duration: 0.3s;
-    width: 40%;
 }
 .valid:hover {
   transform: scale(1.05);
   cursor: pointer;
   transition-duration: 0.3s;
+}
+@media screen and (max-width : 1024px) {
+.login-box {
+  width: 40%;
+}
+}
+@media screen and (max-width : 768px) {
+.login-box {
+  width: 50%;
+}
 }
 </style>

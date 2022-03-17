@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const db = require('../lib/db.js');
 const fs = require('fs');
+const uuid = require('uuid');
 
 //S'inscrire//
 exports.signup = (req, res, next) => {
@@ -14,7 +15,7 @@ exports.signup = (req, res, next) => {
             if (err) {
               return res.status(500).send({msg: err});
             } else {
-              db.query(`INSERT INTO users (user_ID, firstname, lastname, email, password, avatarURL) VALUES (null, ${db.escape(req.body.firstname)}, ${db.escape(req.body.lastname)}, ${db.escape(req.body.email)}, ${db.escape(hash)}, 'http://127.0.0.1:3000/images/default_avatar.png');`,
+              db.query(`INSERT INTO users (user_ID, firstname, lastname, email, password, avatarURL) VALUES ('${uuid.v4()}', ${db.escape(req.body.firstname)}, ${db.escape(req.body.lastname)}, ${db.escape(req.body.email)}, ${db.escape(hash)}, 'http://127.0.0.1:3000/images/default_avatar.png');`,
                 (err, result) => {
                   if (err) {
                     throw err;
@@ -68,7 +69,7 @@ exports.login = (req, res, next) => {
 
 //Récupérer un profil par ID//
 exports.profilById = (req, res, next) => {
-    db.query(`SELECT * FROM users WHERE user_ID = ${req.params.id};`,
+    db.query(`SELECT * FROM users WHERE user_ID = '${req.params.id}';`,
     (err, result) => {
         if(err) throw err;
         if(!err) {
@@ -79,7 +80,7 @@ exports.profilById = (req, res, next) => {
 };
 //Vérifier si un user est admin par l'ID//
 exports.isAdmin = (req, res, next) => {
-    db.query(`SELECT isAdmin FROM users WHERE user_ID = ${req.params.id};`,
+    db.query(`SELECT isAdmin FROM users WHERE user_ID = '${req.params.id}';`,
     (err, result) => {
         if(err) throw err;
         if(!err) {
@@ -108,7 +109,7 @@ exports.avatarModifier = (req, res, next) => {
     if(imageUrl == undefined || imageUrl == null) {
       return res.status(201).send({msg: 'Aucune image ajoutée'});
     } else {
-      db.query(`UPDATE users SET avatarURL = ${db.escape(imageUrl)} WHERE user_ID = ${req.params.id};`,
+      db.query(`UPDATE users SET avatarURL = ${db.escape(imageUrl)} WHERE user_ID = '${req.params.id}';`,
       (err, result) => {
         if (err) {
           throw err;
@@ -121,23 +122,32 @@ exports.avatarModifier = (req, res, next) => {
 };
 //Supprimer un utilisateur par ID//
 exports.deleteUser = (req, res, next) => {
-    db.query(`DELETE FROM users WHERE user_ID = ${req.params.id};`,
-    (err, result) => {
-        if(err) throw err;
-        if(!err) {
-          db.query(`DELETE FROM posts WHERE posted_by_ID = ${req.params.id};`,(err,result) => {
-            if(err) throw err;
-            if(!err) {
-              return res.status(409).send({msg: 'Utilisateur supprimé'});
-            }
-          });
-          db.query(`DELETE FROM comments WHERE commented_by_ID = ${req.params.id};`,(err,result) => {
-            if(err) throw err;
-            if(!err) {
-              return res.status(409).send({msg: 'Commentaires supprimés'});
-            }
-          });
-        }
+    db.query(`DELETE FROM users WHERE user_ID = '${req.params.id}';`,(err) => {
+      if(err) {
+        console.log(err);
+        res.sendStatus(500);
+        return;
       }
-    );
+      if(!err) {
+        db.query(`DELETE FROM posts WHERE posted_by_ID = '${req.params.id}';`,(err) => {
+          if (err) {
+            console.log(err);
+            res.sendStatus(500);
+            return;
+          }
+          if(!err) {
+            db.query(`DELETE FROM comments WHERE commented_by_ID = '${req.params.id}';`,(err) => {
+              if (err) {
+                console.log(err);
+                res.sendStatus(500);
+                return;
+              }
+              if(!err) {
+                return res.status(409).send({msg: 'Utilisateur + posts + commentaires supprimés'});
+              }
+            });
+          }
+        });
+      }
+    });
   };
