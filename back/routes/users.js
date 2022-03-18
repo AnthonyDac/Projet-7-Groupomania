@@ -5,15 +5,15 @@ const multer = require('../middleware/multer-config.js');
 const userCtrl = require('../controllers/users.js');
 
 //Créer un compte
-router.post('/signup', userCtrl.signup);
+router.post('/signup', multer, userCtrl.signup);
 //Se connecter
-router.post('/login', userCtrl.login);
+router.post('/login', multer, userCtrl.login);
 //Récupérer un profil par ID//
-router.get('/profil/:id', userCtrl.profilById);
+router.get('/profil/:id', multer, userCtrl.profilById);
 //Vérifier si un user est admin par l'ID//
-router.get('/userAdmin/:id', userCtrl.isAdmin);
+router.get('/userAdmin/:id', multer, userCtrl.isAdmin);
 //Récupérer tous les profils//
-router.get('/allProfils', userCtrl.getAllUsers);
+router.get('/allProfils', multer, userCtrl.getAllUsers);
 //Modifier l'avatar d'un utilisateur par ID//
 router.post('/update_profil/:id', multer, userCtrl.avatarModifier);
 //Supprimer un utilisateur par ID//
