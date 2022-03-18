@@ -3,6 +3,7 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 const path = require('path');
+const userMiddleware = require("./middleware/users.js");
 const userRoute = require('./routes/users.js');
 const postRoute = require('./routes/posts.js');
 const adminRoute = require('./routes/admin.js');
@@ -19,10 +20,10 @@ app.use((req, res, next) => {
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     next();
 });
-app.use('/', userRoute);
-app.use('/', postRoute);
-app.use('/', adminRoute);
-app.use('/', commentRoute);
+app.use('/', userMiddleware.validateRegister, userRoute);
+app.use('/', userMiddleware.validateRegister, postRoute);
+app.use('/', userMiddleware.validateRegister, adminRoute);
+app.use('/', userMiddleware.validateRegister, commentRoute);
 // run server
 app.listen(PORT, () => console.log(`NODEJS : Serveur démarré sur le port ${PORT}`));
 app.use('/images', express.static(path.join(__dirname, 'images')));
