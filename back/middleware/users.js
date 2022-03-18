@@ -2,7 +2,12 @@ const jwt = require('jsonwebtoken');
 
 module.exports = {
     validateRegister: (req, res, next) => {
-        if(!req.body.email || req.body.email.length < 3) {
+        if(!req.body.email) {
+          return res.status(400).send({
+            message: 'Accés refusé!',
+        });
+        }
+        if(req.body.email.length < 3) {
             return res.status(400).send({
                 message: 'Adresse mail invalide',
             });
