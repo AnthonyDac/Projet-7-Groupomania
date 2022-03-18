@@ -5,9 +5,9 @@ const multer = require('../middleware/multer-config.js');
 const userCtrl = require('../controllers/users.js');
 
 //Créer un compte
-router.post('/signup', userMiddleware.validateRegister, userCtrl.signup);
+router.post('/signup', userCtrl.signup);
 //Se connecter
-router.post('/login', userMiddleware.validateRegister, userCtrl.login);
+router.post('/login', userCtrl.login);
 //Récupérer un profil par ID//
 router.get('/profil/:id', userCtrl.profilById);
 //Vérifier si un user est admin par l'ID//
